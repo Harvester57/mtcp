@@ -542,7 +542,7 @@ FlushTCPSendingBuffer(mtcp_manager_t mtcp, tcp_stream *cur_stream, uint32_t cur_
 			               - (seq - sndvar->snd_una);
 		/* if there is no space in the window */
 		if (remaining_window <= 0 ||
-		    (remaining_window < sndvar->mss && seq - sndvar->snd_una > 0)) {
+		    (remaining_window < sndvar->mss && TCP_SEQ_GT(seq, sndvar->snd_una))) {
 			/* if peer window is full, send ACK and let its peer advertises new one */
 			if (sndvar->peer_wnd <= sndvar->cwnd) {
 #if 0
