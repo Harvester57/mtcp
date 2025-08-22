@@ -101,8 +101,9 @@ int http_response_write_header(server *srv, connection *con) {
 		if (srv->cur_ts != srv->last_generated_date_ts) {
 			buffer_prepare_copy(srv->ts_date_str, 255);
 
+			struct tm tm;
 			strftime(srv->ts_date_str->ptr, srv->ts_date_str->size - 1,
-				 "%a, %d %b %Y %H:%M:%S GMT", gmtime(&(srv->cur_ts)));
+				 "%a, %d %b %Y %H:%M:%S GMT", gmtime_r(&(srv->cur_ts), &tm));
 
 			srv->ts_date_str->used = strlen(srv->ts_date_str->ptr) + 1;
 
